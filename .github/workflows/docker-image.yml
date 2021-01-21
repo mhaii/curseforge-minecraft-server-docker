@@ -1,0 +1,40 @@
+name: Build image to dockerhub
+
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'Version of the pack (used for tagging the image)'
+        required: true
+      pack_url:
+        description: '.zip url to download'
+        required: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v2
+    - name: Login to DockerHub
+      if: github.event_name != 'pull_request'
+      uses: docker/login-action@v1
+      with:
+        username: ${{ secrets.DOCKER_HUB_ID }}
+        password: ${{ secrets.DOCKER_HUB_PASSWORD }}
+    - name: Build the image
+      uses: docker/build-push-action@v2
+      with:
+        build-args: |
+          url=${{ github.event.inputs.pack_url }}
+        tags: |
+          mhaii/minecraft-all-the-mods-6:latest
+          mhaii/minecraft-all-the-mods-6:${{ github.event.inputs.version }}
+        labels: |
+          image.source=${{ github.event.repository.html_url }}
+          image.created=${{ steps.prep.outputs.created }}
+          image.revision=${{ github.sha }}
+    - name: Push image to DockerHub
+      run: |
+        docker push mhaii/minecraft-all-the-mods-6:latest
+        docker push mhaii/minecraft-all-the-mods-6:${{ github.event.inputs.version }}
