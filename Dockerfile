@@ -7,7 +7,8 @@ WORKDIR /stage
 ARG url="[use --build-arg url=XXXXX to specify server file url]"
 RUN filename=$(basename $url); output_dir=${filename%%.zip}; wget $url; unzip $filename; mv -f $output_dir/* .; rm -rf $filename $output_dir
 # accept EULA after initiation so that script wouldn't start running server
-RUN chmod a+x ./startserver.sh; ./startserver.sh; echo "eula=true" >> eula.txt
+RUN chmod a+x ./startserver.sh; ./startserver.sh; echo "eula=true" >> eula.txt; rm -f modpack-download.zip
+
 
 ########################################################
 
@@ -16,7 +17,7 @@ FROM openjdk:11-jre-slim AS RUNTIME
 WORKDIR /minecraft
 COPY --from=STAGING /stage .
 
-VOLUME ["/minecraft/world", "/minecraft/server.properties"]
+VOLUME ["/minecraft/world", "/minecraft/backups", "/minecraft/server.properties", "/minecraft/ops.json"]
 
 EXPOSE 25565
 ENTRYPOINT ["./startserver.sh"]
