@@ -1,14 +1,17 @@
 name: Build image to dockerhub
 
 on:
-  workflow_dispatch:
+  workflow_call:
     inputs:
       version:
-        description: 'Version of the pack (used for tagging the image)'
         required: true
+        type: string
       pack_url:
-        description: '.zip url to download'
         required: true
+        type: string
+      image_name:
+        required: true
+        type: string
 
 jobs:
   build:
@@ -26,15 +29,15 @@ jobs:
       uses: docker/build-push-action@v2
       with:
         build-args: |
-          url=${{ github.event.inputs.pack_url }}
+          url=${{ inputs.pack_url }}
         tags: |
-          mhaii/minecraft-all-the-mods-6:latest
-          mhaii/minecraft-all-the-mods-6:${{ github.event.inputs.version }}
+          ${{ inputs.image_name }}:latest
+          ${{ inputs.image_name }}:${{ inputs.version }}
         labels: |
           image.source=${{ github.event.repository.html_url }}
           image.created=${{ steps.prep.outputs.created }}
           image.revision=${{ github.sha }}
     - name: Push image to DockerHub
       run: |
-        docker push mhaii/minecraft-all-the-mods-6:latest
-        docker push mhaii/minecraft-all-the-mods-6:${{ github.event.inputs.version }}
+        docker push ${{ inputs.image_name }}:latest
+        docker push ${{ inputs.image_name }}:${{ inputs.version }}
