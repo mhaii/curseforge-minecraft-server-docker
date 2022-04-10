@@ -1,4 +1,4 @@
-name: Build image to dockerhub
+name: Build ATM6 image to dockerhub
 
 on:
   workflow_dispatch:
