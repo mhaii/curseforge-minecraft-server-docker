@@ -17,3 +17,6 @@ jobs:
       version: ${{ github.event.inputs.version }}
       pack_url: ${{ github.event.inputs.pack_url }}
       image_name: mhaii/minecraft-all-the-mods-6
+    secrets:
+      image_repo_id: ${{ secrets.DOCKER_HUB_ID }}
+      image_repo_password: ${{ secrets.DOCKER_HUB_PASSWORD }}
