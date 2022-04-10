@@ -12,7 +12,7 @@ on:
 
 jobs:
   build:
-    uses: mhaii/curseforge-minecraft-server-docker/.github/workflows/build-image.yml@main
+    uses: mhaii/curseforge-minecraft-server-docker/.github/workflows/build-image.yml@master
     with:
       version: ${{ github.event.inputs.version }}
       pack_url: ${{ github.event.inputs.pack_url }}
