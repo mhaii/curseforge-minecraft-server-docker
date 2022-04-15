@@ -21,7 +21,7 @@ WORKDIR /minecraft
 COPY --from=STAGING /stage .
 
 # also "/minecraft/server/server.properties", "/minecraft/server/ops.json
-VOLUME ["/minecraft/server/world", "/minecraft/server/backups"]
+VOLUME ["/minecraft/server/world", "/minecraft/backups"]
 
 EXPOSE 25565
 ENTRYPOINT ["./startserver.sh"]
