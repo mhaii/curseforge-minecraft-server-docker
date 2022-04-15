@@ -1,4 +1,4 @@
-FROM openjdk:18-alpine AS STAGING
+FROM openjdk:17-alpine AS STAGING
 
 RUN apk add bash wget unzip
 
@@ -7,12 +7,13 @@ WORKDIR /stage
 ARG url="[use --build-arg url=XXXXX to specify server file url]"
 RUN filename=$(basename $url); output_dir=${filename%%.zip}; wget $url; unzip $filename; mv -f $output_dir/* .; rm -rf $filename $output_dir
 # accept EULA after initiation so that script wouldn't start running server
-RUN chmod a+x ./startserver.sh; ./startserver.sh; echo "eula=true" >> setup/eula.txt; rm -f modpack-download.zip
+RUN sed -i 's/autoRestart: true/autoRestart: false/g' server-setup-config.yaml; chmod a+x ./startserver.sh; ./startserver.sh; sed -i 's/autoRestart: false/autoRestart: true/g' server-setup-config.yaml;
+RUN cd setup; echo "eula=true" > eula.txt; rm -f modpack-download.zip
 
 
 ########################################################
 
-FROM openjdk:18-alpine AS RUNTIME
+FROM openjdk:17-alpine AS RUNTIME
 
 RUN apk add bash
 
