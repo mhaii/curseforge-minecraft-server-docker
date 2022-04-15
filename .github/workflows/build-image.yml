@@ -36,7 +36,7 @@ jobs:
     - name: Build the image
       uses: docker/build-push-action@v2
       with:
-        file: {context}/${{ inputs.dockerfile || 'Dockerfile.openjdk11' }}
+        file: ${{ inputs.dockerfile || 'Dockerfile.openjdk11' }}
         build-args: |
           url=${{ inputs.pack_url }}
           base_build_image_tag=${{ inputs.java_image_tag }}
