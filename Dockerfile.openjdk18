@@ -1,4 +1,4 @@
-FROM openjdk:19-alpine AS STAGING
+FROM openjdk:18-alpine AS STAGING
 
 WORKDIR /stage
 
@@ -11,7 +11,7 @@ RUN chmod a+x ./startserver.sh; ./startserver.sh; echo "eula=true" >> eula.txt; 
 
 ########################################################
 
-FROM openjdk:19-alpine AS RUNTIME
+FROM openjdk:18-alpine AS RUNTIME
 
 WORKDIR /minecraft
 COPY --from=STAGING /stage .
