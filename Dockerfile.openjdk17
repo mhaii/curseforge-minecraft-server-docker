@@ -7,7 +7,7 @@ WORKDIR /stage
 ARG url="[use --build-arg url=XXXXX to specify server file url]"
 RUN filename=$(basename $url); output_dir=${filename%%.zip}; wget $url; unzip $filename; mv -f $output_dir/* .; rm -rf $filename $output_dir
 # accept EULA after initiation so that script wouldn't start running server
-RUN sed -i 's/baseInstallPath: setup/baseInstallPath: server/g' -e 's/autoRestart: true/autoRestart: false/g' server-setup-config.yaml; chmod a+x ./startserver.sh; ./startserver.sh; sed -i 's/autoRestart: false/autoRestart: true/g' server-setup-config.yaml;
+RUN sed -e 's/baseInstallPath: setup/baseInstallPath: server/g' -e 's/autoRestart: true/autoRestart: false/g' -i server-setup-config.yaml; chmod a+x ./startserver.sh; ./startserver.sh; sed -e 's/autoRestart: false/autoRestart: true/g' -i server-setup-config.yaml;
 RUN cd server; echo "eula=true" > eula.txt; rm -f modpack-download.zip
 
 
