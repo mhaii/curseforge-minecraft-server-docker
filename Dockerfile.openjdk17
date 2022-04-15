@@ -1,6 +1,4 @@
-# use non-slim because it doesn't include wget, curl, or unzip
-# only able to use upto some java 10-ish cause script has "-d64" flag that was removed and will cause error
-FROM openjdk:19 AS STAGING
+FROM openjdk:19-jdk AS STAGING
 
 WORKDIR /stage
 
