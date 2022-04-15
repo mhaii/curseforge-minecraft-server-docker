@@ -3,10 +3,7 @@ name: Build image to dockerhub
 on:
   workflow_call:
     inputs:
-      java_image_tag:
-        required: false
-        type: string
-      java_final_image_tag:
+      dockerfile:
         required: false
         type: string
       version:
@@ -39,6 +36,7 @@ jobs:
     - name: Build the image
       uses: docker/build-push-action@v2
       with:
+        file: {context}/${{ inputs.dockerfile || 'Dockerfile.openjdk11' }}
         build-args: |
           url=${{ inputs.pack_url }}
           base_build_image_tag=${{ inputs.java_image_tag }}
