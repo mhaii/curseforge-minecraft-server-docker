@@ -14,6 +14,8 @@ jobs:
   build:
     uses: mhaii/curseforge-minecraft-server-docker/.github/workflows/build-image.yml@master
     with:
+      java_image_tag: 17.0-jdk
+      java_final_image_tag: 17.0-slim
       version: ${{ github.event.inputs.version }}
       pack_url: ${{ github.event.inputs.pack_url }}
       image_name: mhaii/minecraft-all-the-mods-7

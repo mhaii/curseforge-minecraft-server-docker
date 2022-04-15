@@ -1,6 +1,6 @@
 # use non-slim because it doesn't include wget, curl, or unzip
 # only able to use upto some java 10-ish cause script has "-d64" flag that was removed and will cause error
-FROM openjdk:11-jre AS STAGING
+FROM openjdk:${base_build_image_tag:-11-jre} AS STAGING
 
 WORKDIR /stage
 
@@ -12,7 +12,7 @@ RUN chmod a+x ./startserver.sh; ./startserver.sh; echo "eula=true" >> eula.txt; 
 
 ########################################################
 
-FROM openjdk:11-jre-slim AS RUNTIME
+FROM openjdk:${base_build_image_tag:-11-jre-slim} AS RUNTIME
 
 WORKDIR /minecraft
 COPY --from=STAGING /stage .
