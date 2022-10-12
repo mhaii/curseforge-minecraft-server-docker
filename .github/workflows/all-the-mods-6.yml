@@ -15,8 +15,8 @@ jobs:
     uses: mhaii/curseforge-minecraft-server-docker/.github/workflows/build-image.yml@master
     with:
       dockerfile: openjdk11.Dockerfile
-      version: ${{ github.event.inputs.version }}
-      pack_url: ${{ github.event.inputs.pack_url }}
+      version: ${{ inputs.version }}
+      pack_url: ${{ inputs.pack_url }}
       image_name: mhaii/minecraft-all-the-mods-6
     secrets:
       image_repo_id: ${{ secrets.DOCKER_HUB_ID }}
