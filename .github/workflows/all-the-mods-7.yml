@@ -1,5 +1,9 @@
 name: Build ATM7 image to dockerhub
 
+permissions:
+  contents: read
+  packages: write
+
 on:
   workflow_dispatch:
     inputs:
@@ -26,6 +30,7 @@ jobs:
       version: ${{ inputs.version }}
       pack_url: ${{ inputs.pack_url }}
       image_name: mhaii/minecraft-all-the-mods-7
+      image_registry: ghcr.io
     secrets:
-      image_repo_id: ${{ secrets.DOCKER_HUB_ID }}
-      image_repo_password: ${{ secrets.DOCKER_HUB_PASSWORD }}
+      image_repo_id: ${{ github.actor }}
+      image_repo_password: ${{ secrets.GITHUB_TOKEN }}
