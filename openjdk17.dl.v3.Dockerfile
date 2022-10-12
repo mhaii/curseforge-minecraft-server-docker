@@ -10,7 +10,6 @@ RUN filename=$(basename $url); output_dir=${filename%%.zip}; wget $url; unzip $f
 RUN sed -e 's/baseInstallPath: setup/baseInstallPath: server/g' -e 's/autoRestart: true/autoRestart: false/g' -i server-setup-config.yaml; chmod a+x ./startserver.sh; ./startserver.sh; sed -e 's/autoRestart: false/autoRestart: true/g' -i server-setup-config.yaml;
 RUN cd server; echo "eula=true" > eula.txt; rm -f modpack-download.zip
 
-
 ########################################################
 
 FROM openjdk:17-alpine AS RUNTIME
