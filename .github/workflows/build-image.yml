@@ -1,5 +1,3 @@
-name: Build image to dockerhub
-
 env:
   REGISTRY: ghcr.io
   IMAGE_NAME: ${{ github.repository }}
@@ -62,7 +60,7 @@ jobs:
           url=${{ inputs.pack_url }}
           base_build_image_tag=${{ inputs.java_image_tag }}
           base_final_image_tag=${{ inputs.java_final_image_tag || inputs.java_image_tag }}
-        platforms: linux/amd64,linux/arm64/v8
+        platforms: linux/amd64 #,linux/arm64/v8
         tags: ${{ steps.meta.outputs.tags }}
         labels: ${{ steps.meta.outputs.labels }}
         push: true
